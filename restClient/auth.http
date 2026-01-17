@@ -1,0 +1,163 @@
+### Authentication Endpoints
+
+# Base URL
+@baseUrl = http://localhost:3000
+
+### Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "customer@example.com",
+  "password": "password123",
+  "name": "John Customer",
+  "phone": "+1234567890",
+  "address": "123 Main St, City, State",
+  "role": "CUSTOMER"
+}
+
+### Register a driver
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "driver@example.com",
+  "password": "password123",
+  "name": "Mike Driver",
+  "phone": "+1234567891",
+  "address": "456 Driver St, City, State",
+  "role": "DRIVER",
+  "licenseNumber": "DL123456789",
+  "vehicleNumber": "VH789456",
+  "vehicleType": "CAR"
+}
+
+### Register an admin
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin@123example.com",
+  "password": "password123",
+  "name": "Admin User",
+  "phone": "+1234567892",
+  "address": "789 Admin Ave, City, State",
+  "role": "ADMIN"
+}
+
+### Login as customer
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "customer@example.com",
+  "password": "password123"
+}
+
+### Login as driver
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "driver@example.com",
+  "password": "password123"
+}
+
+### Login as admin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "password123"
+}
+
+### Refresh token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "your-refresh-token-here"
+}
+
+### Logout
+POST {{baseUrl}}/auth/logout
+# Authorization: Bearer {{accessToken}} 
+
+### Password Reset Flow
+
+### Step 1: Request password reset
+POST {{baseUrl}}/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "customer@example.com"
+}
+
+### Step 2: Verify reset token (use the token from the email)
+POST {{baseUrl}}/auth/verify-reset-token
+Content-Type: application/json
+
+{
+  "email": "customer@example.com",
+  "token": "123456"
+}
+
+### Step 3: Reset password with valid token
+POST {{baseUrl}}/auth/reset-password
+Content-Type: application/json
+
+{
+  "email": "customer@example.com",
+  "token": "123456",
+  "newPassword": "newpassword123"
+}
+
+### Test invalid token
+POST {{baseUrl}}/auth/verify-reset-token
+Content-Type: application/json
+
+{
+  "email": "customer@example.com",
+  "token": "000000"
+}
+
+### Test expired token (if you have one)
+POST {{baseUrl}}/auth/reset-password
+Content-Type: application/json
+
+{
+  "email": "customer@example.com",
+  "token": "expired_token_here",
+  "newPassword": "newpassword123"
+}
+
+### Test non-existent email
+POST {{baseUrl}}/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com"
+}
+
+### Change password (requires authentication)
+# Note: Replace {{accessToken}} with actual token from login response
+POST {{baseUrl}}/auth/change-password
+# Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "currentPassword": "password123",
+  "newPassword": "newpassword123"
+}
+
+### Test Email Sending (for debugging)
+POST {{baseUrl}}/auth/test-email
+Content-Type: application/json
+
+{
+  "email": "eddymax3715@gmail.com"
+}
+
+### Test Environment Variables (for debugging)
+GET {{baseUrl}}/auth/test-env 

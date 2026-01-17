@@ -1,0 +1,93 @@
+### Test Driver Application Flow
+
+# Variables
+@baseUrl = http://localhost:3000/api
+@authToken = YOUR_AUTH_TOKEN_HERE
+@adminToken = YOUR_ADMIN_TOKEN_HERE
+@userId = cmdlzkrvh0000k7a8y2y7guhn
+
+### 1. Check user's current driver status
+GET {{baseUrl}}/admin/debug/user/{{userId}}/driver-status
+Authorization: Bearer {{adminToken}}
+
+###
+
+### 2. Submit a driver application (as the user)
+POST {{baseUrl}}/drivers/apply
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "licenseNumber": "TEST123456",
+  "vehicleNumber": "ABC123",
+  "vehicleType": "CAR",
+  "reason": "I want to become a driver to help with deliveries"
+}
+
+###
+
+### 3. Check user's driver status after application
+GET {{baseUrl}}/admin/debug/user/{{userId}}/driver-status
+Authorization: Bearer {{adminToken}}
+
+###
+
+### 4. Admin approves the application
+PATCH {{baseUrl}}/admin/driver-applications/{{userId}}/manage
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "action": "approve"
+}
+
+###
+
+### 5. Admin rejects the application (for testing reapplication)
+PATCH {{baseUrl}}/admin/driver-applications/{{userId}}/manage
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "action": "reject",
+  "reason": "License verification failed. Please provide a valid driver's license."
+}
+
+###
+
+### 6. User reapplies after rejection
+POST {{baseUrl}}/drivers/apply
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "licenseNumber": "UPDATED123456",
+  "vehicleNumber": "XYZ789",
+  "vehicleType": "MOTORCYCLE",
+  "reason": "I have updated my license information and would like to reapply"
+}
+
+###
+
+### 7. Admin approves the reapplication
+PATCH {{baseUrl}}/admin/driver-applications/{{userId}}/manage
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "action": "approve"
+}
+
+###
+
+### 8. Get driver applications (admin view)
+GET {{baseUrl}}/admin/driver-applications?status=PENDING
+Authorization: Bearer {{adminToken}}
+
+###
+
+### 9. Get driver applications with all statuses
+GET {{baseUrl}}/admin/driver-applications
+Authorization: Bearer {{adminToken}}
+
+### 

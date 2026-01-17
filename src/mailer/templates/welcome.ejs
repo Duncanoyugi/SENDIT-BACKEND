@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to SendIT - Your Account is Ready!</title>
+    <!-- Debug: name="<%= typeof name !== 'undefined' ? name : 'UNDEFINED' %>", profilePicture="<%= typeof profilePicture !== 'undefined' ? profilePicture : 'UNDEFINED' %>" -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 10px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .sendit-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo-text {
+            color: #DBBB02;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        
+        .logo-tagline {
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0 0 0;
+        }
+        
+        .main-heading {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .content-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #DBBB02;
+            color: #fff;
+            font-size: 32px;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .user-avatar .initial {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            z-index: 1;
+        }
+        
+        .card-heading {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .greeting {
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        
+        .content-text {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .highlight-text {
+            font-weight: 600;
+            text-align: center;
+            margin: 20px 0;
+            color: #DBBB02;
+            font-size: 16px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #DBBB02;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            margin: 20px 0;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #c4a902;
+        }
+        
+        .support-link {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .support-link a {
+            color: #DBBB02;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .support-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .footer a {
+            color: #DBBB02;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer .separator-dot {
+            color: #333;
+            margin: 0 8px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .main-heading {
+                font-size: 20px;
+            }
+            
+            .card-heading {
+                font-size: 18px;
+            }
+            
+            .logo {
+                width: 100px;
+            }
+            
+            .logo-text {
+                font-size: 28px;
+            }
+            
+            .logo-tagline {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+
+        <!-- Main Content Card -->
+        <div class="content-card">
+            <div class="sendit-logo">
+                <!-- SendIT Logo -->
+                <img src="https://res.cloudinary.com/duymwzfhj/image/upload/v1753344984/1logo-removebg-preview_inqcyd.png" alt="SendIT Logo" style="width: 150px; height: 150px; object-fit: contain; margin-bottom: 20px;">
+                <h1 class="logo-text">SendIT</h1>
+                <p class="logo-tagline">Fast & Reliable Delivery</p>
+            </div>
+            <div class="user-avatar">
+                <!-- Debug: name="<%= typeof name !== 'undefined' ? name : 'UNDEFINED' %>", profilePicture="<%= typeof profilePicture !== 'undefined' ? profilePicture : 'UNDEFINED' %>" -->
+                <% if (profilePicture && profilePicture.trim() !== '' && profilePicture !== 'undefined' && profilePicture !== 'null') { %>
+                    <img src="<%= profilePicture %>" alt="<%= name %>'s profile">
+                <% } else { %>
+                    <span class="initial"><%= name ? name.charAt(0).toUpperCase() : 'U' %></span>
+                <% } %>
+            </div>
+            
+            <h2 class="card-heading">Welcome to <span style="color: #DBBB02;">SendIT!</span></h2>
+            
+            <div class="greeting">
+                <!-- Debug: name="<%= typeof name !== 'undefined' ? name : 'UNDEFINED' %>" -->
+                Greetings, <strong><%= name %></strong>
+            </div>
+            
+            <div class="content-text">
+                Thank you for joining SendIT! We're excited to have you on board and help you with all your delivery needs.
+            </div>
+            
+            <div class="content-text">
+                Your account has been successfully created. Our platform offers secure, fast, and reliable delivery services across the country.
+            </div>
+            
+            <div class="highlight-text">
+                You can Track your parcels and manage your account from your dashboard.
+            </div>
+            
+            
+            
+            <div style="text-align: center;">
+                <a href="<%= typeof baseUrl !== 'undefined' ? baseUrl : 'http://localhost:4200' %>/dashboard" class="cta-button">
+                    Start Sending
+                </a>
+            </div>
+            
+            <div class="support-link">
+                Need help, Visit our help center</a> or <a href="<%= typeof baseUrl !== 'undefined' ? baseUrl : 'http://localhost:4200' %>/contact">contact our support team</a>.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <a href="<%= typeof baseUrl !== 'undefined' ? baseUrl : 'http://localhost:4200' %>/help">Help Center</a>
+            <span class="separator-dot">•</span>
+            <a href="<%= typeof baseUrl !== 'undefined' ? baseUrl : 'http://localhost:4200' %>/contact">Contact us</a>
+        </div>
+    </div>
+</body>
+</html> 
