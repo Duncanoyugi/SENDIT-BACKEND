@@ -38,14 +38,12 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  @UsePipes(createJoiValidationPipe(registerSchema))
   async register(@Body() registerDto: RegisterDto) {
     return await this.authService.register(registerDto);
   }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  @UsePipes(createJoiValidationPipe(loginSchema))
   async login(@Body() loginDto: LoginDto) {
     return await this.authService.login(loginDto);
   }
@@ -66,14 +64,12 @@ export class AuthController {
 
   @Post('forgot-password')
   @HttpCode(HttpStatus.OK)
-  @UsePipes(createJoiValidationPipe(forgotPasswordSchema))
   async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
     return await this.authService.forgotPassword(forgotPasswordDto.email);
   }
 
   @Post('verify-reset-token')
   @HttpCode(HttpStatus.OK)
-  @UsePipes(createJoiValidationPipe(verifyResetTokenSchema))
   async verifyResetToken(@Body() verifyResetTokenDto: VerifyResetTokenDto) {
     return await this.authService.verifyResetToken(
       verifyResetTokenDto.email,
@@ -83,7 +79,6 @@ export class AuthController {
 
   @Post('reset-password')
   @HttpCode(HttpStatus.OK)
-  @UsePipes(createJoiValidationPipe(resetPasswordSchema))
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     return await this.authService.resetPassword(
       resetPasswordDto.email,
@@ -95,7 +90,6 @@ export class AuthController {
   @Post('change-password')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
-  @UsePipes(createJoiValidationPipe(changePasswordSchema))
   async changePassword(
     @Req() req: Request,
     @Body() changePasswordDto: ChangePasswordDto,
