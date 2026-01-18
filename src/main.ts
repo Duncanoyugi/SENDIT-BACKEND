@@ -3,52 +3,66 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const isProd = process.env.APP_ENV === 'production';
-
   const logger = new Logger('Bootstrap');
 
-  try {
-    const app = await NestFactory.create(AppModule, {
-      logger: isProd
-        ? ['error', 'warn', 'log']
-        : ['error', 'warn', 'log', 'debug', 'verbose'],
-    });
+  const isProd =
+    process.env.NODE_ENV === 'production' ||
+    process.env.APP_ENV === 'production';
 
-    // Enable CORS
-    app.enableCors({
-      origin: [ 'http://localhost:4200',
-        'https://sendit-frontend-pied.vercel.app',
-      ],
-      credentials: true,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-      allowedHeaders: ['*'],
-    });
+  const app = await NestFactory.create(AppModule, {
+    logger: isProd
+      ? ['error', 'warn', 'log']
+      : ['error', 'warn', 'log', 'debug', 'verbose'],
+  });
 
-    // Global validation (lighter in production)
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: !isProd, // avoid heavy class-transformer in prod
-      }),
-    );
+  /**
+   * CORS CONFIGURATION
+   */
+  app.enableCors({
+    origin: [
+      'http://localhost:4200',
+      'http://localhost:5173',
+      'https://sendit-frontend-pied.vercel.app',
+    ],
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'Origin',
+      'X-Requested-With',
+    ],
+    optionsSuccessStatus: 204,
+  });
 
-    // Global API prefix
-    app.setGlobalPrefix('api');
+  /**
+   * GLOBAL VALIDATION
+   */
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
-    const port = Number(process.env.PORT) || 3000;
+  /**
+   * GLOBAL API PREFIX
+   */
+  app.setGlobalPrefix('api');
 
-    // REQUIRED for Render
-    await app.listen(port, '0.0.0.0');
+  /**
+   * PORT — Render injects this
+   */
+  const port = Number(process.env.PORT) || 3000;
 
-    logger.log(`Application running on port ${port}`);
-  } catch (error) {
-    logger.error(
-      'Failed to start application',
-      error instanceof Error ? error.stack : error,
-    );
-    process.exit(1);
-  }
+  await app.listen(port, '0.0.0.0');
+
+  logger.log(`🚀 Backend running on port ${port}`);
 }
 
-void bootstrap();
+bootstrap().catch((err) => {
+  console.error('❌ Application failed to start', err);
+  process.exit(1);
+});
