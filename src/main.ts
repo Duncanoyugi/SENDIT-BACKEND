@@ -16,21 +16,31 @@ async function bootstrap() {
   });
 
   /**
-   * CORS CONFIGURATION
+   * CORS CONFIGURATION — Dynamic origin handling
    */
+  const allowedOrigins = [
+    'http://localhost:4200',
+    'http://localhost:5173',
+    'https://sendit-frontend-pied.vercel.app',
+  ];
+
   app.enableCors({
-    origin: [
-      'http://localhost:4200',
-      'http://localhost:5173',
-      'https://sendit-frontend-pied.vercel.app',
-    ],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like Postman or server-to-server)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(
+          new Error(`CORS policy: Origin ${origin} is not allowed.`),
+        );
+      }
+    },
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-
   });
 
   /**
-   * GLOBAL VALIDATION
+   * GLOBAL VALIDATION PIPE
    */
   app.useGlobalPipes(
     new ValidationPipe({
@@ -46,7 +56,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   /**
-   * PORT — Render injects this
+   * PORT CONFIGURATION — Render injects this automatically
    */
   const port = Number(process.env.PORT) || 3000;
 
